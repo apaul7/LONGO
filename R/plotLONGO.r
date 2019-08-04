@@ -4,49 +4,18 @@
 #' plot the data.
 #'
 #' @param simp.df dataframe to be plotted
-#' @return Returns nothing
-plotLONGO <- function(simp.df) {
-    x_vals <- (simp.df$kb_length)
-    ymax <- (max(simp.df[, 2:(ncol(simp.df))]) * 1.2)
-    yminim <- min(simp.df[, 2:(ncol(simp.df))])
-    png(
-        "LONGO_out.png",
-        width = 6,
-        height = 6,
-        units = "in",
-        res = 300
-    )
-    matplot(
-        x = x_vals,
-        y = simp.df[, 2],
-        type = "l",
-        col = 1,
-        xlab = "Gene length (kb)",
-        ylab = "Gene expression",
-        ylim = c(yminim, ymax),
-        main = "LONGO output"
-    )
-    for (i in 3:ncol(simp.df)) {
-        par(new = TRUE)
-        matplot(
-            x = x_vals,
-            y = simp.df[, i],
-            type = "l",
-            col = i - 1,
-            xlab = "",
-            ylab = "",
-            ylim = c(yminim, ymax),
-            axes = FALSE
-        )
-    }
-    labels <- colnames(simp.df)
-    legend(
-        "topright",
-        legend = c(labels[2:length(labels)]),
-        col = 2:ncol(simp.df) - 1,
-        lty = 1,
-        cex = 0.8,
-        ncol = 2
-    )
-    dev.off()
+#' @param x_label x label for plot
+#' @param y_label y label for plot
+#' @import ggplot2
+#' @import reshape2
+#' @return Returns a plot
+plotLONGO <- function(simp.df, x_label, y_label) {
+  column_length_name <- "kb_length"
+  simp.df <- as.data.frame(lapply(simp.df, as.numeric))
+  melt.df <- melt(simp.df, id.vars = column_length_name)
+  plot <- ggplot(melt.df, aes(x = kb_length, color = variable)) + geom_line(aes(y = value))
+  # can add caption or subtitle for more descriptive plots
+  # set position of the legend
+  plot <- plot + labs(title = "LONGO output", y = y_label, x = x_label)
+  plot
 }

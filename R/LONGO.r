@@ -472,67 +472,27 @@ LONGO <- function() {
         output$plot1 <- shiny::renderPlot({
             data.df.analyzed <- alldata.df$finaldata
             if (input$scale == "linear") {
-                x_vals <- (data.df.analyzed$kb_length)
-                x_lab <- "Gene length (kb)"
+                x_label <- "Gene length (kb)"
             }
             else{
                 # log
-                x_vals <- log(data.df.analyzed$kb_length)
-                x_lab <- "Log(Gene length (kb))"
+                data.df.analyzed$kb_length <- log(data.df.analyzed$kb_length)
+                x_label <- "Log(Gene length (kb))"
             }
-            ymax <-(max(data.df.analyzed[, 2:(ncol(data.df.analyzed))]) * 1.2)
-            yminim <- min(data.df.analyzed[, 2:(ncol(data.df.analyzed))])
-            # png("LONGO_out.png", width=6, height=6, units="in", res=300)
-            matplot(x=x_vals, y=data.df.analyzed[, 2], type="l",
-                col=1, xlab=x_lab, ylim=c(yminim, ymax),
-                ylab="Gene expression (a.u.)", main="LONGO Plot"
-            )
-            for (i in 3:ncol(data.df.analyzed)) {
-                par(new=TRUE)
-                matplot(x=x_vals, y=data.df.analyzed[, i],
-                    type="l", col=i - 1, xlab="",
-                    ylab="", ylim=c(yminim, ymax),
-                    axes=FALSE
-                )
-            }
-
-            labels <- colnames(data.df.analyzed)
-            legend(input$legend, legend=c(labels[2:length(labels)]),
-                col=2:ncol(data.df.analyzed) - 1, lty=1,
-                cex=1, ncol=2
-            )
+            plotLONGO(data.df.analyzed, x_label, "Gene Expression")
         })
 
         output$plot2 <- shiny::renderPlot({
             data.df.analyzed <- alldata.df$P_data
-
             if (input$scale == "linear") {
-                x_vals <- (data.df.analyzed$kb_length)
-                x_lab <- "Gene length (kb)"
+                x_label <- "Gene length (kb)"
             }
             else{
                 # log
-                x_vals <- log(data.df.analyzed$kb_length)
-                x_lab <- "Log(Gene Length)"
+                data.df.analyzed$kb_length <- log(data.df.analyzed$kb_length)
+                x_label <- "Log(Gene Length(kb))"
             }
-            ymax <-(max(data.df.analyzed[, 2:(ncol(data.df.analyzed))]) * 1.2)
-            yminim <- min(data.df.analyzed[, 2:(ncol(data.df.analyzed))])
-            matplot(x=x_vals, y=data.df.analyzed[, 2], type="l",
-                col=1, xlab=x_lab, ylim=c(yminim, ymax),
-                ylab="P value", main="LONGO P Value Plot"
-            )
-            for (i in 3:ncol(data.df.analyzed)) {
-                par(new=TRUE)
-                matplot(x=x_vals, y=data.df.analyzed[, i],
-                    type="l", col=i - 1, xlab="",
-                    ylab="", ylim=c(yminim, ymax),
-                    axes=FALSE
-            )}
-            labels <- colnames(data.df.analyzed)
-            legend(input$legend, legend=c(labels[2:length(labels)]),
-                col=2:ncol(data.df.analyzed) - 1, lty=1,
-                    cex=1, ncol=2
-            )
+            plotLONGO(data.df.analyzed, x_label, "P value")
         })
 
         output$plot3 <- shiny::renderPlot({

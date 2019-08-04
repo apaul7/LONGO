@@ -6,7 +6,7 @@ biocViews: Transcriptomics, ResearchField, Software, BiologicalQuestion,
     DifferentialExpression, GeneExpression
 Depends: R (>= 3.4)
 Imports: biomaRt, shiny, DT, hash, topGO, data.table, edgeR, preprocessCore, stats,
-    grDevices, graphics, utils, methods
+    grDevices, graphics, utils, methods, ggplot2, reshape2
 Authors@R: c(person("Alexander Paul", email="alex.paul@slu.edu", role=c("aut",
     "cre")), person("Tae-Hyuk (Ted) Ahn", email="ted.ahn@slu.edu", role="aut"), 
     person("Matthew McCoy", email="mccoy@wustl.edu", role="aut"), 
@@ -16,6 +16,6 @@ Description: Tool used to interpret the long gene expression values. This can
     be done through the shiny app or through a R function.
 License: file LICENSE
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
