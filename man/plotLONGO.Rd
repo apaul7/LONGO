@@ -4,13 +4,17 @@
 \alias{plotLONGO}
 \title{Plot function}
 \usage{
-plotLONGO(simp.df)
+plotLONGO(simp.df, x_label, y_label)
 }
 \arguments{
 \item{simp.df}{dataframe to be plotted}
+
+\item{x_label}{x label for plot}
+
+\item{y_label}{y label for plot}
 }
 \value{
-Returns nothing
+Returns a plot
 }
 \description{
 This is a internal function. This function allows the program to
